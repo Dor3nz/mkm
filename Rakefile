@@ -15,12 +15,12 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.name = "mkm"
-  gem.homepage = "http://github.com/knaveofdiamonds/mkm"
+  gem.homepage = "http://github.com/boof/mkm"
   gem.license = "MIT"
   gem.summary = "Ruby interface to the magiccardmarket.eu API."
   gem.description = "Ruby interface to the magiccardmarket.eu API."
-  gem.email = "roland.swingler@gmail.com"
-  gem.authors = ["Roland Swingler"]
+  gem.email = "florian.assmann@email.de"
+  gem.authors = ["Roland Swingler", "Florian Aßmann"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
