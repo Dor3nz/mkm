@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
+    ".rbenv-gemsets",
     ".rspec",
     "Gemfile",
     "LICENSE.txt",
@@ -29,6 +30,7 @@ Gem::Specification.new do |s|
     "lib/mkm.rb",
     "lib/mkm/client.rb",
     "lib/mkm/session.rb",
+    "mkm.gemspec",
     "spec/client_spec.rb",
     "spec/oauth_header_spec.rb",
     "spec/samples/games.json",
@@ -45,20 +47,20 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<addressable>, [">= 0"])
-      s.add_runtime_dependency(%q<faraday>, [">= 0"])
-      s.add_runtime_dependency(%q<simple_oauth>, [">= 0"])
-      s.add_runtime_dependency(%q<oj>, [">= 0"])
+      s.add_runtime_dependency(%q<addressable>, ["~> 2.3.6"])
+      s.add_runtime_dependency(%q<faraday>, ["~> 0.9.0"])
+      s.add_runtime_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+      s.add_runtime_dependency(%q<oj>, ["~> 2.10.3"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 2"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
     else
-      s.add_dependency(%q<addressable>, [">= 0"])
-      s.add_dependency(%q<faraday>, [">= 0"])
-      s.add_dependency(%q<simple_oauth>, [">= 0"])
-      s.add_dependency(%q<oj>, [">= 0"])
+      s.add_dependency(%q<addressable>, ["~> 2.3.6"])
+      s.add_dependency(%q<faraday>, ["~> 0.9.0"])
+      s.add_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+      s.add_dependency(%q<oj>, ["~> 2.10.3"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
@@ -66,10 +68,10 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<simplecov>, [">= 0"])
     end
   else
-    s.add_dependency(%q<addressable>, [">= 0"])
-    s.add_dependency(%q<faraday>, [">= 0"])
-    s.add_dependency(%q<simple_oauth>, [">= 0"])
-    s.add_dependency(%q<oj>, [">= 0"])
+    s.add_dependency(%q<addressable>, ["~> 2.3.6"])
+    s.add_dependency(%q<faraday>, ["~> 0.9.0"])
+    s.add_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+    s.add_dependency(%q<oj>, ["~> 2.10.3"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
