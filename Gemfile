@@ -1,9 +1,9 @@
 source "http://rubygems.org"
 
-gem "addressable"
-gem "faraday"
-gem "simple_oauth"
-gem "oj"
+gem "addressable", "~> 2.3.6"
+gem "faraday", "~> 0.9.0"
+gem "simple_oauth", "~> 0.3.0"
+gem "oj", "~> 2.10.3"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
