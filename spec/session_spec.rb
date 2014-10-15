@@ -1,20 +1,29 @@
 require 'spec_helper'
 
 describe Mkm::Session do
-  let(:http) { double(:http_client) }
-  let(:response) { double(:response, :body => "body") }
+
+  let(:faraday_connection) {
+    double :faraday_connection,
+      url_prefix: 'https://www.mkmapi.eu/ws/v1.1/output.json'
+  }
+
+  let(:response) {
+    double :response,
+      :body => "body"
+  }
 
   it "gets the body of the response" do
-    expect(SimpleOAuth::Header).to receive(:new).
-      with("get", "https://www.mkmapi.eu/ws/v1.1/output.json/path",
-           {}, :oauth).
-      and_return("auth")
-    
-    expect(http).to receive(:get).
-      with("/ws/v1.1/output.json/path", {}, :authorization => "auth").
+
+    expect(Mkm::OAuthHeader).to receive(:new).
+      with('get', 'https://www.mkmapi.eu/ws/v1.1/output.json/path', {}, :oauth).
+      and_return('OAuth')
+
+    expect(faraday_connection).to receive(:get).
+      with("path", {}, :authorization => "OAuth").
       and_return(response)
-    
-    expect( described_class.new(http, :oauth).get("path") ).
-      to eql("body")
+
+    subject = described_class.new(faraday_connection, :oauth).get 'path'
+    expect(subject).to eql("body")
   end
+
 end

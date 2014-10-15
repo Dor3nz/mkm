@@ -1,18 +1,20 @@
 require 'simple_oauth'
 
 module Mkm
+
   # @api private
   class Session
-    def initialize(http, oauth_parameters)
-      @http = http
+
+    def initialize(connection, oauth_parameters)
+      @connection = connection
       @oauth_parameters = oauth_parameters
     end
 
-    def get(partial_path)
-      path = "/ws/v1.1/output.json/#{partial_path}"
-      url = "https://www.mkmapi.eu#{path}"
+    def get(path)
+      oauth = oauth_header 'get', "#{ @connection.url_prefix }/#{ path }"
+      response = @connection.get path, {}, :authorization => oauth
 
-      @http.get(path, {}, :authorization => oauth_header('get', url) ).body
+      response.body
     end
 
     private
@@ -24,10 +26,11 @@ module Mkm
 
   # @api private
   class OAuthHeader < SimpleOAuth::Header
+
     # Overridden to include the URL as the realm - this is what is
     # required by MKM.
     def to_s
-      "OAuth realm=\"#{url}\", #{normalized_attributes}"
+      %Q'OAuth realm="#{ url }", #{ normalized_attributes }'
     end
 
     # Do not URI-escape OAuth parameters - this does not work with the
@@ -38,5 +41,6 @@ module Mkm
         collect { |k, v| %(#{k}="#{v}") }.
         join(', ')
     end
+
   end
 end
