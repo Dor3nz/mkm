@@ -2,28 +2,22 @@ require 'spec_helper'
 
 describe Mkm::Session do
 
-  let(:faraday_connection) {
-    double :faraday_connection,
-      url_prefix: 'https://www.mkmapi.eu/ws/v1.1/output.json'
-  }
+  let(:connection) { double :connection, url_prefix: 'https://sandbox.mkmapi.eu/ws/v1.1/output.json' }
+  let(:agent) { double :agent }
 
-  let(:response) {
-    double :response,
-      :body => "body"
-  }
+  before :each do
+    allow(Mkm::Agent).to receive(:new).and_return(agent)
+  end
 
-  it "gets the body of the response" do
+  it 'gets itself an agent' do
+    expect(Mkm::Agent).to receive(:new).with(connection, {})
+    described_class.new connection, {}
+  end
 
-    expect(Mkm::OAuthHeader).to receive(:new).
-      with('get', 'https://www.mkmapi.eu/ws/v1.1/output.json/path', {}, :oauth).
-      and_return('OAuth')
-
-    expect(faraday_connection).to receive(:get).
-      with("path", {}, :authorization => "OAuth").
-      and_return(response)
-
-    subject = described_class.new(faraday_connection, :oauth).get 'path'
-    expect(subject).to eql("body")
+  it 'returns an Account with the agent assigned' do
+    account = described_class.new(connection, {}).account
+    expect(account).to be_an(Mkm::Account)
+    expect(account.agent).to be(agent)
   end
 
 end
