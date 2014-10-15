@@ -1,6 +1,5 @@
 source "http://rubygems.org"
 
-gem "addressable", "~> 2.3.6"
 gem "faraday", "~> 0.9.0"
 gem "simple_oauth", "~> 0.2.0"
 gem "oj", "~> 2.10.3"
