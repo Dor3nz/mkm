@@ -2,6 +2,29 @@
 
 Ruby interface to the magiccardmarket.eu API.
 
+== Usage
+
+You'll need an OAuth credentials for a dedicated app from MKM.
+
+Use with bundler
+
+    gem 'mkm', github: 'boof/mkm'
+
+Create a session
+
+    session = Mkm.auth({
+      consumer_key: "xxxx",
+      consumer_secret: "xxxx",
+      token: "xxxx",
+      token_secret: "xxxx",
+    })
+
+Retreive your account's data
+
+    me = session.account # => Mkm::Account
+    me.id # => 9999
+    me.username # => 'Maxi'
+
 == TODO
 
 * domain models
