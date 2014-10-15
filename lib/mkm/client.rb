@@ -8,8 +8,8 @@ module Mkm
     end
 
     def games
-      parse(@session.get("games"), :game).
-        each {|g| g[:id] = g.delete(:idGame) }
+      parse(@session.get("games"), 'game').
+        each {|g| g['id'] = g.delete('idGame') }
     end
 
     def card_by_name(name, game_id=1, language_id=1)
@@ -25,11 +25,11 @@ module Mkm
     def product(name, game_id, language_id, search)
       clean_name = URI.escape(name.gsub(/[^a-zA-Z0-9 ]/, '').downcase)
       path = ["products", clean_name, game_id, language_id, search].join("/")
-      parse(@session.get(path), :product)
+      parse(@session.get(path), 'product')
     end
 
     def parse(response, root)
-      Oj.load(response, symbol_keys: true)[root]
+      Oj.load(response)[root]
     end
   end
 end

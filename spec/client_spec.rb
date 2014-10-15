@@ -15,11 +15,11 @@ describe Mkm::Client do
     end
 
     it "returns games with name attributes" do
-      expect(client.games.first[:name]).to eql("Magic the Gathering")
+      expect(client.games.first['name']).to eql("Magic the Gathering")
     end
 
     it "returns games with id attributes" do
-      expect(client.games.first[:id]).to eql(1)
+      expect(client.games.first['id']).to eql(1)
     end
   end
 
