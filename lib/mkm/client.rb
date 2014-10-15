@@ -2,13 +2,10 @@ require 'oj'
 require 'uri'
 
 module Mkm
-  class Client
-    def initialize(session)
-      @session = session
-    end
+  class Client < Struct.new(:agent)
 
     def games
-      parse(@session.get("games"), 'game').
+      parse(agent.get("games"), 'game').
         each {|g| g['id'] = g.delete('idGame') }
     end
 
@@ -22,14 +19,15 @@ module Mkm
 
     private
 
-    def product(name, game_id, language_id, search)
-      clean_name = URI.escape(name.gsub(/[^a-zA-Z0-9 ]/, '').downcase)
-      path = ["products", clean_name, game_id, language_id, search].join("/")
-      parse(@session.get(path), 'product')
-    end
+      def product(name, game_id, language_id, search)
+        clean_name = URI.escape(name.gsub(/[^a-zA-Z0-9 ]/, '').downcase)
+        path = ["products", clean_name, game_id, language_id, search].join("/")
+        parse(agent.get(path), 'product')
+      end
 
-    def parse(response, root)
-      Oj.load(response)[root]
-    end
+      def parse(response, root)
+        Oj.load(response)[root]
+      end
+
   end
 end
