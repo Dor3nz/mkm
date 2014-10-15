@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Mkm::OAuthHeader do
+
   let(:subject) {
     described_class.new("GET", url, {}, params).to_s
   }
@@ -15,16 +16,15 @@ describe Mkm::OAuthHeader do
       nonce: "53eb1f44909d6"
     }
   }
-  
+
   let(:url) { "https://www.mkmapi.eu/ws/v1.1/account" }
 
-  context "Monkey-patches" do
-    it "includes the realm" do
-      expect(subject).to include("realm=\"#{url}\"")
-    end
-
-    it "includes the correct signature, unescaped" do
-      expect(subject).to include("oauth_signature=\"DLGHHYV9OsbB/ARf73psEYaNWkI=\"")
-    end
+  it "includes the realm" do
+    expect(subject).to include("realm=\"#{url}\"")
   end
+
+  it "includes the correct signature, unescaped" do
+    expect(subject).to include("oauth_signature=\"DLGHHYV9OsbB/ARf73psEYaNWkI=\"")
+  end
+
 end
