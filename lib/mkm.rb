@@ -10,6 +10,7 @@ module Mkm
   autoload :Session,  path['session']
   autoload :Client,   path['client']
   autoload :Base,     path['base']
+  autoload :User,     path['user']
   autoload :Account,  path['account']
 
   def self.connect(url = 'https://www.mkmapi.eu/ws/v1.1')

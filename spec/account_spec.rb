@@ -11,6 +11,8 @@ describe Mkm::Account do
       and_return samples
   end
 
+  it 'is a User' do
+    expect(subject).to be_a(Mkm::User)
   end
 
   it 'fetch the data when it is required' do
@@ -18,11 +20,23 @@ describe Mkm::Account do
     subject.data
   end
 
-  it 'gets the account id' do
-    expect(subject.id).to be(9999)
-  end
-  it 'gets the account username' do
-    expect(subject.username).to eql('Maxi')
+  {
+    balance:  9.45,
+
+    name: Mkm::User::Name.new('Maximilian', 'Mustermann'),
+    address: Mkm::User::Address.new(
+      "Maximilian Mustermann",
+      "c/o Musterfrau",
+      "Hauptweg 15",
+      "12345", "Berlin",
+      "D"
+    ),
+
+  }.each do |property, expectation|
+    it "gets the account's #{ property }" do
+      value = subject.send property
+      expect(value).to eql(expectation)
+    end
   end
 
   def samples

@@ -1,20 +1,15 @@
 module Mkm
-  class Account < Client
+  class Account < User
 
-    def data
-      @data ||= begin
-        response = agent.get 'account'
-        parse response, 'account'
+    def balance
+      data['accountBalance']
+    end
+
+    private
+
+      def __load
+        self.data = agent.get('account').fetch 'account'
       end
-    end
-
-    def id
-      data['idUser']
-    end
-
-    def username
-      data['username']
-    end
 
   end
 end
