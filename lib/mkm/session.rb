@@ -1,11 +1,11 @@
 module Mkm
   class Session
 
+    attr_reader :account
+
     def initialize(connection, authentication)
       @agent = Agent.new connection, authentication
-    end
-    def account
-      @account ||= Account.new @agent
+      @account = Account.new @agent
     end
 
   end
