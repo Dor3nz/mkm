@@ -1,11 +1,8 @@
-require 'oj'
-require 'uri'
-
 module Mkm
   class Client < Struct.new(:agent)
 
     def games
-      parse(agent.get("games"), 'game').
+      agent.get("games")['game'].
         each {|g| g['id'] = g.delete('idGame') }
     end
 
@@ -22,11 +19,8 @@ module Mkm
       def product(name, game_id, language_id, search)
         clean_name = URI.escape(name.gsub(/[^a-zA-Z0-9 ]/, '').downcase)
         path = ["products", clean_name, game_id, language_id, search].join("/")
-        parse(agent.get(path), 'product')
-      end
 
-      def parse(response, root)
-        Oj.load(response)[root]
+        agent.get(path)['product']
       end
 
   end

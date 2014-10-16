@@ -1,4 +1,5 @@
 require 'simple_oauth'
+require 'oj'
 
 module Mkm
   class Agent < Struct.new(:connection, :auth)
@@ -6,10 +7,7 @@ module Mkm
     attr_reader :last
 
     def get(path)
-      @last = connection.get path, {},
-        authorization: oauth('get', "#{ connection.url_prefix }/#{ path }")
-
-      @last.body
+      process :get, path
     end
 
     def put(path, body)
@@ -23,6 +21,15 @@ module Mkm
     end
 
     private
+
+      def process(method, path)
+        json_path = "output.json/#{ path }"
+
+        @last = connection.send method, json_path, {},
+          authorization: oauth(method, "#{ connection.url_prefix }/#{ json_path }")
+
+        Oj.load @last.body
+      end
 
       def oauth(method, url, options = {})
         header = SimpleOAuth::Header.new method, url, options, auth

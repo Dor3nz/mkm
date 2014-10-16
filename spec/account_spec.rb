@@ -8,7 +8,9 @@ describe Mkm::Account do
   before :each do
     allow(agent).to receive(:get).
       with('account').
-      and_return sample_file('account')
+      and_return samples
+  end
+
   end
 
   it 'fetch the data when it is required' do
@@ -23,8 +25,9 @@ describe Mkm::Account do
     expect(subject.username).to eql('Maxi')
   end
 
-  def sample_file(name)
-    File.read File.join(File.dirname(__FILE__), "samples", "#{ name }.json")
+  def samples
+    json = File.read File.join(File.dirname(__FILE__), "samples", "account.json")
+    Oj.load json
   end
 
 end

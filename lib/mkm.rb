@@ -11,7 +11,7 @@ module Mkm
   autoload :Client,   path['client']
   autoload :Account,  path['account']
 
-  def self.connect(url = 'https://www.mkmapi.eu/ws/v1.1/output.json')
+  def self.connect(url = 'https://www.mkmapi.eu/ws/v1.1')
     @connection = Faraday.new url, ssl: { verify: false } do |faraday|
       # faraday.response :logger
       faraday.adapter Faraday.default_adapter

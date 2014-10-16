@@ -70,6 +70,7 @@ describe Mkm::Client do
   end
 
   def sample_file(name)
-    File.read(File.join(File.dirname(__FILE__), "samples", "#{name}.json"))
+    json = File.read(File.join(File.dirname(__FILE__), "samples", "#{name}.json"))
+    Oj.load json
   end
 end
