@@ -1,5 +1,6 @@
 require 'simple_oauth'
 require 'oj'
+require 'oj_mimic_json'
 
 module Mkm
   class Agent < Struct.new(:connection, :auth)
@@ -7,12 +8,12 @@ module Mkm
     attr_reader :last
 
     def get(path)
-      process :get, path
+      process :get, path, {}
+    end
+    def put(path, body = nil)
+      process :put, path, body
     end
 
-    def put(path, body)
-      raise NotImplementedError
-    end
     def post(path, body)
       raise NotImplementedError
     end
@@ -22,13 +23,13 @@ module Mkm
 
     private
 
-      def process(method, path)
+      def process(method, path, payload)
         json_path = "output.json/#{ path }"
 
-        @last = connection.send method, json_path, {},
+        @last = connection.send method, json_path, payload,
           authorization: oauth(method, "#{ connection.url_prefix }/#{ json_path }")
 
-        Oj.load @last.body
+        @last.body
       end
 
       def oauth(method, url, options = {})
