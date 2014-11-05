@@ -6,12 +6,19 @@ module Mkm
         comment: 'comments',
         price: 'price'
 
+    # TODO Implement a Language class
     def language
       fail NotImplementedError
     end
 
+    # TODO Implement and return a proxy
     def seller
       fail NotImplementedError
+    end
+
+    # RADAR Really only set for single articles?
+    def condition
+      Condition.fetch data['condition']
     end
 
     # The count key represents has different semantics depending on the request
@@ -27,11 +34,6 @@ module Mkm
     # TODO implement context specific getter
     def count
       data['count']
-    end
-
-    # RADAR Really only set for single articles?
-    def condition
-      Condition.fetch data['condition']
     end
 
     def reserved?
