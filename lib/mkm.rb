@@ -10,10 +10,11 @@ module Mkm
     File.expand_path path, __FILE__
   end
 
-  autoload :Agent,   self / 'agent'
-  autoload :Session, self / 'session'
-  autoload :Entity,  self / 'entity'
-  autoload :Service, self / 'service'
+  autoload :Agent,     self / 'agent'
+  autoload :Session,   self / 'session'
+  autoload :Entity,    self / 'entity'
+  autoload :Service,   self / 'service'
+  autoload :Condition, self / 'condition'
 
   LANGUAGES = [nil, :en, :fr, :de, :es, :it, :zh_CN, :jp, :pt, :ru, :ko, :zh_TW]
 
