@@ -2,6 +2,7 @@ require 'bundler/setup'
 
 require 'faraday'
 require 'faraday_middleware'
+require 'oj'
 
 module Mkm
 
@@ -29,8 +30,35 @@ module Mkm
     @connection ||= connect
   end
 
-  def self.auth(params)
-    Session.new Agent.new(connection, params)
+  def self.auth(params = nil)
+    fail 'cannot authenticate without params' unless params ||= load_params
+
+    agent = Agent.new connection, transform(params)
+    Session.new agent
   end
 
+  private
+
+  def self.load_params
+    mkmrc_path = File.join ENV['HOME'], '.mkmrc'
+    Oj.load File.read(mkmrc_path) if File.readable? mkmrc_path
+  end
+
+  def self.transform(params)
+    {
+      consumer_key:    get(params, :consumer_key, :app_token),
+      consumer_secret: get(params, :consumer_secret, :app_secret),
+      token:           get(params, :token, :access_token),
+      token_secret:    get(params, :token_secret, :access_token_secret)
+    }
+  end
+
+  def self.get(params, key, variation)
+    value = params[key] ||
+            params[key.to_s] ||
+            params[variation] ||
+            params[variation.to_s]
+
+    value || fail(ArgumentError, "missing #{ key } or #{ variation }")
+  end
 end

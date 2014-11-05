@@ -13,10 +13,10 @@ Use with bundler
 Create a session
 
     session = Mkm.auth({
-      consumer_key: "xxxx",
-      consumer_secret: "xxxx",
-      token: "xxxx",
-      token_secret: "xxxx",
+      app_token:           "xxxx",
+      app_token_secret:    "xxxx",
+      access_token:        "xxxx",
+      access_token_secret: "xxxx"
     })
 
 Retreive your account's data
@@ -50,4 +50,3 @@ Retreive your account's data
 
 Copyright (c) 2014 Roland Swingler. See LICENSE.txt for
 further details.
-
