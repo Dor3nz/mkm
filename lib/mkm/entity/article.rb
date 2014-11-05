@@ -35,7 +35,7 @@ module Mkm
     end
 
     def reserved?
-      data['in_shopping_cart']
+      data['inShoppingCart']
     end
 
     def foil?
