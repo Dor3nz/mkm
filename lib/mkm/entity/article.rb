@@ -37,21 +37,25 @@ module Mkm
     def reserved?
       data['in_shopping_cart']
     end
+
     def foil?
       data['isFoil']
     end
+
     def signed?
       data['isSigned']
     end
+
     def playset?
       data['isPlayset']
     end
+
     def altered?
       data['isAltered']
     end
+
     def first_edition?
       data['isFirstEd']
     end
-
   end
 end
