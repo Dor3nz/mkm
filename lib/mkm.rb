@@ -5,7 +5,6 @@ require 'faraday_middleware'
 require 'oj'
 
 module Mkm
-
   def self./(path)
     path = File.join '..', 'mkm', path.split('/')
     File.expand_path path, __FILE__
@@ -16,7 +15,7 @@ module Mkm
   autoload :Entity,  self / 'entity'
   autoload :Service, self / 'service'
 
-  LANGUAGES = [ nil, :en, :fr, :de, :es, :it, :zh_CN, :jp, :pt, :ru, :ko, :zh_TW ]
+  LANGUAGES = [nil, :en, :fr, :de, :es, :it, :zh_CN, :jp, :pt, :ru, :ko, :zh_TW]
 
   def self.connect(url = 'https://www.mkmapi.eu/ws/v1.1')
     @connection = Faraday.new url, ssl: { verify: false } do |faraday|

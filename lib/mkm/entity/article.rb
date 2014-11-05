@@ -7,10 +7,11 @@ module Mkm
         price: 'price'
 
     def language
-      raise NotImplementedError
+      fail NotImplementedError
     end
+
     def seller
-      raise NotImplementedError
+      fail NotImplementedError
     end
 
     # The count key represents has different semantics depending on the request
