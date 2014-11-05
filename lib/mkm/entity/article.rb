@@ -31,7 +31,7 @@ module Mkm
 
     # RADAR Really only set for single articles?
     def condition
-      data['condition']
+      Condition.fetch data['condition']
     end
 
     def reserved?
