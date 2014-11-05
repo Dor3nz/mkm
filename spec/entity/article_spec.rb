@@ -21,6 +21,9 @@ describe Mkm::Entity::Article do
     it 'should be in excellent condition' do
       expect(subject.condition).to be(Mkm::Condition::EXCELLENT)
     end
+    it 'should be available 3 times' do
+      expect(subject.count).to be(3)
+    end
     it { is_expected.not_to be_reserved }
     it { is_expected.not_to be_foil }
     it { is_expected.not_to be_signed }
@@ -40,14 +43,17 @@ describe Mkm::Entity::Article do
     it 'should have the product_id 266361' do
       expect(subject.product_id).to be(266_361)
     end
-    it 'should commented' do
-      expect(subject.comment).to_not be_empty
+    it 'should commented with "Scan available"' do
+      expect(subject.comment).to be_eql('Scan available')
     end
     it 'should cost 0.03' do
       expect(subject.price).to be(0.03)
     end
     it 'should be in near mint condition' do
       expect(subject.condition).to be(Mkm::Condition::NEAR_MINT)
+    end
+    it 'should be reserved 1 time' do
+      expect(subject.count).to be(1)
     end
     it { is_expected.to be_reserved }
     it { is_expected.not_to be_foil }
