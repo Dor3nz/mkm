@@ -11,6 +11,7 @@ gem "simple_oauth", "~> 0.2.0"
 group :development do
   gem "pry"
   gem "rspec"
+  gem 'guard-rspec', require: false
   gem "rdoc"
   gem "bundler"
   gem "jeweler", "~> 2"
