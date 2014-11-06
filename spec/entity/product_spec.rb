@@ -64,19 +64,19 @@ describe Mkm::Entity::Product do
     subject { described_class.new data }
 
     it 'should have an english name' do
-      expect(subject.en).to be_eql data['1']['productName']
+      expect(subject.en).to be data['1']['productName']
     end
     it 'should have a french name' do
-      expect(subject.fr).to be_eql data['2']['productName']
+      expect(subject.fr).to be data['2']['productName']
     end
     it 'should have a german name' do
-      expect(subject.de).to be_eql data['3']['productName']
+      expect(subject.de).to be data['3']['productName']
     end
     it 'should have a spanish name' do
-      expect(subject.es).to be_eql data['4']['productName']
+      expect(subject.es).to be data['4']['productName']
     end
     it 'should have an italian name' do
-      expect(subject.it).to be_eql data['5']['productName']
+      expect(subject.it).to be data['5']['productName']
     end
     it 'should not have a simplified chinese name' do
       expect(subject.zh_CN).to be_nil
