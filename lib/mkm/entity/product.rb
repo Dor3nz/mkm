@@ -8,8 +8,9 @@ module Mkm
         expansion_icon: 'expIcon',
         number: 'number',
         rarity: 'rarity',
-        articles: 'countArticles',
-        foils: 'countFoils'
+        article_count: 'countArticles',
+        foil_count: 'countFoils',
+        reprint_count: 'countReprints'
 
     def names
       @names ||= Names.new data['name']
@@ -27,17 +28,13 @@ module Mkm
       @prices ||= Prices.new data['priceGuide']
     end
 
-    def reprints
-      @reprints ||= Array.new data['countReprints'] do |n|
-        Reprint.new data.fetch('reprint', [])[n]
-      end
-    end
-
     class Names < Entity
-      (LANGUAGES.count - 2).times do |n|
+      (LANGUAGES.count - 1).times do |n|
         key = "#{ n + 1 }"
         define_method LANGUAGES[n + 1] do
-          data[key]['productName']
+          if translation = data[key]
+            translation['productName']
+          end
         end
       end
     end
@@ -45,18 +42,12 @@ module Mkm
       map id: 'idCategory', name: 'categoryName'
     end
     class Prices < Entity
-      # {"SELL"=>0.16, "LOW"=>0.05, "LOWEX"=>0, "LOWFOIL"=>0, "AVG"=>0, "TREND"=>0.2}
       map average: 'SELL',
           max:     'AVG',
           min:     'LOWEX',
           low:     'LOW',
           foil:    'LOWFOIL',
           trend:   'TREND'
-    end
-    class Reprint < Entity
-      map id: 'idProduct',
-          expansion_name: 'expansion',
-          expansion_icon: 'expIcon'
     end
 
   end
