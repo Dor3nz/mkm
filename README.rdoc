@@ -21,19 +21,19 @@ Create a session
 
 Retreive your account's data
 
-    me = session.account # => Mkm::Account
+    me = session.account.get_user # => Mkm::User
     me.id # => 9999
     me.username # => 'Maxi'
 
 == TODO
 
-* domain models
+* domain models (partially)
 * documentation
-* Account Management
+* Account Management (partially)
 * Market Place Information (partially)
 * Order Management
 * Shopping Cart Manipulation
-* Stock Management
+* Stock Management (partially)
 * Wants List Management
 
 == Contributing to mkm
