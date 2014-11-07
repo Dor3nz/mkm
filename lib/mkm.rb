@@ -26,8 +26,13 @@ module Mkm
       faraday.adapter Faraday.default_adapter
     end
   end
+
+  def self.disconnect
+    @connection = nil
+  end
+
   def self.connection
-    @connection ||= connect
+    @connection || connect
   end
 
   def self.auth(params = nil)
