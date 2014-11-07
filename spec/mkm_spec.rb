@@ -3,6 +3,12 @@ require 'spec_helper'
 describe Mkm do
 
   let(:faraday) { double :faraday }
+  let :params do
+    {
+      consumer_key: '1234', consumer_secret: '2345',
+      token: '3456', token_secret: '4567'
+    }
+  end
   before(:each) { described_class.disconnect }
 
   it 'should connect using the default url' do
@@ -33,6 +39,33 @@ describe Mkm do
     expect(described_class).to receive(:connect).once.and_call_original
 
     2.times { described_class.connection }
+  end
+
+  it 'should try to load ~/.mkmrc if no params are provided' do
+    mkmrc_path = File.join ENV['HOME'], '.mkmrc'
+    data = Oj.dump params
+
+    allow(File).to receive(:readable?).with(mkmrc_path).and_return true
+    expect(Oj).to receive(:load_file).with(mkmrc_path).and_return params
+    expect(Mkm::Agent).to receive(:new).with(anything, params)
+
+    described_class.auth
+  end
+
+  it 'should not try to load ~/.mkmrc if params are provided' do
+    expect(described_class).not_to receive(:load_params)
+    described_class.auth params
+  end
+
+  it 'should fail if no authentication params can be retreived' do
+    allow(described_class).to receive(:load_params)
+    expect { described_class.auth }.to raise_error(/without params/)
+  end
+
+  it 'should create a session with an agent' do
+  end
+
+  it 'should convert Mkm authentication to oauth params' do
   end
 
 end

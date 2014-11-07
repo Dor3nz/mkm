@@ -46,7 +46,7 @@ module Mkm
 
   def self.load_params
     mkmrc_path = File.join ENV['HOME'], '.mkmrc'
-    Oj.load File.read(mkmrc_path) if File.readable? mkmrc_path
+    Oj.load_file mkmrc_path if File.readable? mkmrc_path
   end
 
   def self.transform(params)
