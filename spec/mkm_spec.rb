@@ -74,6 +74,12 @@ describe Mkm do
     expect { described_class.auth }.to raise_error(/without params/)
   end
 
+  it 'should fail if authentication params are missing' do
+    expect do
+      described_class.auth consumer_key: '12345', consumer_secret: '23456'
+    end.to raise_error(/missing token/)
+  end
+
   it 'should create a session with an agent' do
     agent   = double :agent
     session = double :session
