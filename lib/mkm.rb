@@ -35,6 +35,11 @@ module Mkm
     @connection || connect
   end
 
+  # Creates and returns a Mkm::Session.
+  #
+  # The authentication params must be a hash. It supports oauth style or MKM
+  # style authentication params.
+  # If no authentication params are provided it will try to load JSON from ~/.mkmrc.
   def self.auth(params = nil)
     fail 'cannot authenticate without params' unless params ||= load_params
 
