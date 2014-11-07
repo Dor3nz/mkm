@@ -123,8 +123,7 @@ describe Mkm::Entity::Product do
   end
 
   def samples
-    path = File.expand_path '../../../samples/products.json', __FILE__
-    Oj.load File.read(path)
+    Oj.load_file File.expand_path '../../../samples/products.json', __FILE__
   end
 
 end

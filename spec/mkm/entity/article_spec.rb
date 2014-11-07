@@ -65,8 +65,7 @@ describe Mkm::Entity::Article do
   end
 
   def samples
-    path = File.expand_path '../../../samples/article.json', __FILE__
-    Oj.load File.read(path)
+    Oj.load_file File.expand_path '../../../samples/article.json', __FILE__
   end
 
 end
