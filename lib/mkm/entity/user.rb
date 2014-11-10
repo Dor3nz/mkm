@@ -27,19 +27,19 @@ module Mkm
     end
 
     def type
-      @type ||= Type.fetch data['isCommercial']
+      Type.fetch data['isCommercial']
     end
 
     def reliability
-      @reliability ||= Reliability.fetch data['riskGroup']
+      Reliability.fetch data['riskGroup']
     end
 
     def reputation
-      @reputation ||= Reputation.fetch data['reputation']
+      Reputation.fetch data['reputation']
     end
 
     def shipping_speed
-      @shipping_speed ||= ShippingSpeed.fetch data['shipsFast']
+      ShippingSpeed.fetch data['shipsFast']
     end
 
     def name
