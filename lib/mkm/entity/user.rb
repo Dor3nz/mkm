@@ -1,32 +1,16 @@
 module Mkm
   class Entity::User < Entity
 
-    PRIVATE_USER    = 0
-    COMMERCIAL_USER = 1
-    POWERSELLER     = 2
-
-    NO_RISK         = 0
-    LOW_RISK        = 1
-    HIGH_RISK       = 2
-
-    UNKNOWN         = 0
-    OUTSTANDING     = 1
-    VERY_GOOD       = 2
-    GOOD            = 3
-    AVERAGE         = 4
-    BAD             = 5
-
-    NORMAL_SPEED    = 0
-    VERY_FAST       = 1
-    FAST            = 2
+    autoload :ShippingSpeed, Mkm / 'entity/user/shipping_speed'
+    autoload :Type,          Mkm / 'entity/user/type'
+    autoload :Reliability,   Mkm / 'entity/user/reliability'
+    autoload :Reputation,    Mkm / 'entity/user/reputation'
+    autoload :Name,          Mkm / 'entity/user/name'
+    autoload :Address,       Mkm / 'entity/user/address'
 
     map id:             'idUser',
         username:       'username',
-        type:           'isCommercial',
-        reliability:    'riskGroup',
-        reputation:     'reputation',
-        shipping_speed: 'shipsFast',
-        sales:          'sellCount',
+        sale_count:     'sellCount',
         balance:        'accountBalance'
 
     # TODO return country code
@@ -34,12 +18,6 @@ module Mkm
       data['country']
     end
 
-    def commercial?
-      type != PRIVATE_USER
-    end
-    def reliable?
-      reliability == NO_RISK
-    end
     def away?
       data['onVacation']
     end
@@ -48,22 +26,27 @@ module Mkm
       raise NotImplementedError
     end
 
+    def type
+      @type ||= Type.fetch data['isCommercial']
+    end
+
+    def reliability
+      @reliability ||= Reliability.fetch data['riskGroup']
+    end
+
+    def reputation
+      @reputation ||= Reputation.fetch data['reputation']
+    end
+
+    def shipping_speed
+      @shipping_speed ||= ShippingSpeed.fetch data['shipsFast']
+    end
+
     def name
       @name ||= Name.new data['name']
     end
     def address
       @address ||= Address.new data['address']
-    end
-
-    class Name < Entity
-      map first: 'firstName', last: 'lastName'
-    end
-    class Address < Entity
-      map name: 'name',
-          extra: 'extra',
-          street: 'street',
-          zip: 'zip', city: 'city',
-          country: 'country'
     end
 
   end

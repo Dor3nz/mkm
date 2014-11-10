@@ -13,5 +13,9 @@ module Mkm
       end
     end
 
+    def blank?
+      data.nil? || data.empty?
+    end
+
   end
 end
