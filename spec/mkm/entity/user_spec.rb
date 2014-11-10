@@ -4,7 +4,7 @@ describe Mkm::Entity::User do
 
   context 'Commercial Seller' do
 
-    subject { described_class.new samples['seller'] }
+    subject { described_class.new sample('seller') }
 
     it 'should have the id 9999' do
       expect(subject.id).to be 9_999

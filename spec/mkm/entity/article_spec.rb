@@ -4,7 +4,7 @@ describe Mkm::Entity::Article do
 
   context 'example' do
 
-    subject { described_class.new samples['article'].first }
+    subject { described_class.new sample('article').first }
 
     it 'should have the id 142158699' do
       expect(subject.id).to be 142_158_699
@@ -35,7 +35,7 @@ describe Mkm::Entity::Article do
 
   context 'reserved example' do
 
-    subject { described_class.new samples['article'].last }
+    subject { described_class.new sample('article').last }
 
     it 'should have the id 139659146' do
       expect(subject.id).to be 139_659_146
@@ -62,10 +62,6 @@ describe Mkm::Entity::Article do
     it { is_expected.not_to be_altered }
     it { is_expected.not_to be_first_edition }
 
-  end
-
-  def samples
-    Oj.load_file File.expand_path '../../../samples/article.json', __FILE__
   end
 
 end

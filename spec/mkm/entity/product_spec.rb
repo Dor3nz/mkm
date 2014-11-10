@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Mkm::Entity::Product do
 
-  subject { described_class.new samples['product'].first }
+  subject { described_class.new sample('product').first }
 
   it 'should have the id 250553' do
     expect(subject.id).to be 250_553
@@ -60,7 +60,7 @@ describe Mkm::Entity::Product do
 
   context described_class.const_get :Names do
 
-    let(:data) { samples['product'].first['name'] }
+    let(:data) { sample('product').first['name'] }
     subject { described_class.new data }
 
     it 'should have an english name' do
@@ -98,7 +98,7 @@ describe Mkm::Entity::Product do
 
   context described_class.const_get :Prices do
 
-    let(:data) { samples['product'].first['priceGuide'] }
+    let(:data) { sample('product').first['priceGuide'] }
     subject { described_class.new data }
 
     it 'should have an average price of 31.8' do
@@ -120,10 +120,6 @@ describe Mkm::Entity::Product do
       expect(subject.trend).to be_nil
     end
 
-  end
-
-  def samples
-    Oj.load_file File.expand_path '../../../samples/products.json', __FILE__
   end
 
 end
