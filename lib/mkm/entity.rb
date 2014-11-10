@@ -7,9 +7,13 @@ module Mkm
     autoload :Product,   Mkm / 'entity/product'
     autoload :Article,   Mkm / 'entity/article'
 
+    def self.define_getter(attr, key)
+      define_method(attr) { data[key] }
+    end
+
     def self.map(mapping)
       mapping.each do |attr, key|
-        define_method(attr) { data[key] }
+        define_getter attr, key
       end
     end
 
