@@ -6,7 +6,7 @@ module Mkm
     end
 
     def set_vacation(boolean)
-      agent.put "account/vacation/#{ e boolean }"
+      agent.put "account/vacation/#{ !! boolean }"
       @user.data['onVacation'] = boolean if @user
     end
 
