@@ -22,7 +22,7 @@ describe Mkm::Service::AccountManagement do
     expect(subject.get_user.data).to be data
   end
 
-  it 'should put the account into vacation' do
+  it 'should put the accounts vacation state' do
     expect(agent).to receive(:put).with 'account/vacation/true'
     subject.set_vacation true
   end
