@@ -14,7 +14,7 @@ module Mkm
     GOOD         = register name: 'Good', abbr: 'GD'
     LIGHT_PLAYED = register name: 'Light Played', abbr: 'LP'
     PLAYED       = register name: 'Played', abbr: 'PL'
-    POOR         = register name: 'Poor'
+    POOR         = register name: 'Poor', abbr: 'P'
 
     def self.fetch(abbr)
       @instances.fetch abbr
