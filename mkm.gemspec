@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.authors = ["Roland Swingler", "Florian A\u{df}mann"]
   s.date = "2014-10-14"
-  s.description = "Ruby interface to the magiccardmarket.eu API."
+  s.description = "Ruby interface for version 1.1 of the magiccardmarket.eu API."
   s.email = "florian.assmann@email.de"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -79,4 +79,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<simplecov>, [">= 0"])
   end
 end
-

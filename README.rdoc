@@ -1,6 +1,6 @@
 = Mkm
 
-Ruby interface to the magiccardmarket.eu API.
+Ruby interface for version 1.1 of the magiccardmarket.eu API.
 
 == Usage
 
@@ -48,5 +48,5 @@ Retreive your account's data
 
 == Copyright
 
-Copyright (c) 2014 Roland Swingler. See LICENSE.txt for
+Copyright (c) 2014 Florian Aßmann. See LICENSE.txt for
 further details.
