@@ -5,34 +5,21 @@ describe Mkm::Entity::Expansion do
   let(:data) { double :expansion }
   subject { described_class.new data }
 
-  it 'should return data["idExpansion"] as #id' do
-    id = rand 10_000
+  {
+    id:   [ :idExpansion, rand(9_999) ],
+    name: [ :name,        "Name #{ Time.now }" ],
+    icon: [ :icon,        "Icon #{ Time.now }" ]
+  }.
+  each do |attribute, key_value|
+    key, value = key_value
 
-    allow(data).to receive(:[]).
-      with('idExpansion').
-      and_return id
+    it "should return data['#{ key }'] as ##{ attribute }" do
+      allow(data).to receive(:[]).
+        with(key.to_s).
+        and_return value
 
-    expect(subject.id).to eq id
-  end
-
-  it 'should return data["name"] as #name' do
-    name = "Name of expansion #{ Time.now }"
-
-    allow(data).to receive(:[]).
-      with('name').
-      and_return name
-
-    expect(subject.name).to eq name
-  end
-
-  it 'should return data["icon"] as #icon' do
-    icon = "Icon of expansion #{ Time.now }"
-
-    allow(data).to receive(:[]).
-      with('icon').
-      and_return icon
-
-    expect(subject.icon).to eq icon
+      expect(subject.send attribute).to be value
+    end
   end
 
 end
