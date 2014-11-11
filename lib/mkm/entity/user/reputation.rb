@@ -3,22 +3,19 @@ module Mkm
 
     @instances = []
 
-    def self.register(value)
-      @instances[value] = new value
-    end
-    def self.register_next
-      register @instances.count
+    def self.register
+      @instances[@instances.count] = new @instances.count
     end
     def self.fetch(value)
       @instances[value]
     end
 
-    UNKNOWN     = register_next
-    OUTSTANDING = register_next
-    VERY_GOOD   = register_next
-    GOOD        = register_next
-    AVERAGE     = register_next
-    BAD         = register_next
+    UNKNOWN     = register
+    OUTSTANDING = register
+    VERY_GOOD   = register
+    GOOD        = register
+    AVERAGE     = register
+    BAD         = register
 
     def unknown?
       self == UNKNOWN

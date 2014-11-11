@@ -84,10 +84,10 @@ describe Mkm do
     agent   = double :agent
     session = double :session
 
-    allow(described_class.const_get :Agent).to receive(:new).
+    allow(described_class::Agent).to receive(:new).
       and_return agent
 
-    expect(described_class.const_get :Session).to receive(:new).
+    expect(described_class::Session).to receive(:new).
       with(agent).
       and_return session
 
@@ -95,7 +95,7 @@ describe Mkm do
   end
 
   it 'should convert Mkm authentication to oauth params' do
-    expect(described_class.const_get :Agent).to receive(:new).
+    expect(described_class::Agent).to receive(:new).
       with(anything, hash_including(
         consumer_key: '12345', consumer_secret: '23456',
         token: '34567', token_secret: '45678'

@@ -3,19 +3,16 @@ module Mkm
 
     @instances = []
 
-    def self.register(value)
-      @instances[value] = new value
-    end
-    def self.register_next
-      register @instances.count
+    def self.register
+      @instances[@instances.count] = new @instances.count
     end
     def self.fetch(value)
       @instances[value]
     end
 
-    PRIVATE_USER    = register_next
-    COMMERCIAL_USER = register_next
-    POWERSELLER     = register_next
+    PRIVATE_USER    = register
+    COMMERCIAL_USER = register
+    POWERSELLER     = register
 
     def private?
       self == PRIVATE_USER

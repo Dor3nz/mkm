@@ -36,7 +36,7 @@ describe Mkm::Entity::User do
       fetch type
   end
 
-  context described_class.const_get :Type do
+  context described_class::Type do
     it '1st Type to be a private user only' do
       expect(described_class.fetch 0).to be_private
       expect(described_class.fetch 0).not_to be_commercial
@@ -65,7 +65,7 @@ describe Mkm::Entity::User do
       fetch reliability
   end
 
-  context described_class.const_get :Reliability do
+  context described_class::Reliability do
     it '1st Reliability to be reliable only' do
       expect(described_class.fetch 0).to be_reliable
       expect(described_class.fetch 0).not_to be_unreliable
@@ -94,7 +94,7 @@ describe Mkm::Entity::User do
       fetch reputation
   end
 
-  context described_class.const_get :Reputation do
+  context described_class::Reputation do
     it '1st Reputation to be unknown only' do
       expect(described_class.fetch 0).to be_unknown
       expect(described_class.fetch 0).not_to be_outstanding
@@ -157,7 +157,7 @@ describe Mkm::Entity::User do
       fetch shipping_speed
   end
 
-  context described_class.const_get :ShippingSpeed do
+  context described_class::ShippingSpeed do
     it '1st ShippingSpeed to be normal only' do
       expect(described_class.fetch 0).to be_normal
       expect(described_class.fetch 0).not_to be_very_fast
@@ -188,7 +188,7 @@ describe Mkm::Entity::User do
       new name
   end
 
-  context described_class.const_get :Name do
+  context described_class::Name do
 
     subject { described_class.new data }
 
@@ -221,7 +221,7 @@ describe Mkm::Entity::User do
       new address
   end
 
-  context described_class.const_get :Address do
+  context described_class::Address do
 
     subject { described_class.new data }
 
