@@ -2,122 +2,195 @@ require 'spec_helper'
 
 describe Mkm::Entity::Product do
 
-  subject { described_class.new sample('product').first }
+  let(:data) { double :data }
+  subject { described_class.new data }
 
-  it 'should have the id 250553' do
-    expect(subject.id).to be 250_553
+  {
+    id:             [ :idProduct,     rand(999_999) ],
+    meta_id:        [ :idMetaproduct, rand(999_999) ],
+    image:          [ :image,         "Image #{ Time.now }" ],
+    expansion_name: [ :expansion,     "Expansion Name #{ Time.now }" ],
+    expansion_icon: [ :expIcon,       "Expansion Icon #{ Time.now }" ],
+    number:         [ :number,        "#{ rand 444 }" ],
+    article_count:  [ :countArticles, rand(999) ],
+    foil_count:     [ :countFoils,    rand(999) ],
+    reprint_count:  [ :countReprints, rand(999) ]
+  }.
+  each do |attribute, key_value|
+    key, value = key_value
+
+    it "should return data['#{ key }'] as ##{ attribute }" do
+      allow(data).to receive(:[]).
+        with(key.to_s).
+        and_return value
+
+      expect(subject.send attribute).to be value
+    end
   end
 
-  it 'should have the meta id 204003' do
-    expect(subject.meta_id).to be 204_003
+  it 'should return data["rarity"] as Rarity on #rarity' do
+    rarity = [
+      'Mythic', 'Rare', 'Special', 'Time Shifted',
+      'Uncommon', 'Common', 'Land', 'Token'
+    ].sample
+
+    allow(data).to receive(:[]).
+      with('rarity').
+      and_return rarity
+
+    expect(subject.rarity).to be described_class::Rarity.
+      fetch rarity
   end
 
-  it 'should have the Snapcaster Mage\'s image' do
-    expect(subject.image).to be_eql './img/cards/Innistrad/snapcaster_mage.jpg'
+  context described_class::Rarity do
+
+    it 'should be comparable' do
+      expect(described_class).to be < Comparable
+    end
+
+    it 'should be ordered' do
+      expect(described_class.fetch 'Mythic').to be <
+        described_class.fetch('Rare')
+      expect(described_class.fetch 'Rare').to be <
+        described_class.fetch('Special')
+      expect(described_class.fetch 'Special').to be <
+        described_class.fetch('Time Shifted')
+      expect(described_class.fetch 'Time Shifted').to be <
+        described_class.fetch('Uncommon')
+      expect(described_class.fetch 'Uncommon').to be <
+        described_class.fetch('Common')
+      expect(described_class.fetch 'Common').to be <
+        described_class.fetch('Land')
+      expect(described_class.fetch 'Land').to be <
+        described_class.fetch('Token')
+    end
+
   end
 
-  it 'should have the expansion name set to Innistrad' do
-    expect(subject.expansion_name).to be_eql 'Innistrad'
+  it 'should return data["name"] as Names on #names' do
+    names = double :names
+
+    allow(data).to receive(:[]).
+      with('name').
+      and_return names
+
+    expect(subject.names).to eq described_class::Names.
+      new names
   end
 
-  it 'should have the expansion icon set to 229' do
-    expect(subject.expansion_icon).to be 229
+  it 'should return the english name by default' do
+    names = double :names, en: 'English Name'
+    allow(subject).to receive(:names).and_return names
+
+    expect(subject.name).to be names.en
   end
 
-  it 'should have the rarity set to Rare' do
-    expect(subject.rarity).to be_eql 'Rare'
+  it 'should return data["category"] as Category on #category' do
+    category = double :category
+
+    allow(data).to receive(:[]).
+      with('category').
+      and_return category
+
+    expect(subject.category).to eq described_class::Category.
+      new category
   end
 
-  it 'should have an article count of 951' do
-    expect(subject.article_count).to be 951
-  end
+  context described_class::Category do
 
-  it 'should have a foil count of 105' do
-    expect(subject.foil_count).to be 105
-  end
-
-  it 'should have translated names' do
-    expect(subject.names).to be_kind_of described_class.const_get :Names
-  end
-
-  it 'should default to the english name' do
-    expected_name = subject.data['name']['1']['productName']
-    expect(subject.name).to be expected_name
-  end
-
-  it 'should have category set to Magic Single' do
-    expect(subject.category.id).to be 1
-    expect(subject.category.name).to be_eql 'Magic Single'
-  end
-
-  it 'should have prices' do
-    expect(subject.prices).to be_kind_of described_class.const_get :Prices
-  end
-
-  it 'should count 1 reprint' do
-    expect(subject.reprint_count).to be 1
-  end
-
-  context described_class.const_get :Names do
-
-    let(:data) { sample('product').first['name'] }
     subject { described_class.new data }
 
-    it 'should have an english name' do
-      expect(subject.en).to be data['1']['productName']
-    end
-    it 'should have a french name' do
-      expect(subject.fr).to be data['2']['productName']
-    end
-    it 'should have a german name' do
-      expect(subject.de).to be data['3']['productName']
-    end
-    it 'should have a spanish name' do
-      expect(subject.es).to be data['4']['productName']
-    end
-    it 'should have an italian name' do
-      expect(subject.it).to be data['5']['productName']
-    end
-    it 'should not have a simplified chinese name' do
-      expect(subject.zh_CN).to be_nil
-    end
-    it 'should not have a portuguese name' do
-      expect(subject.pt).to be_nil
-    end
-    it 'should not have a russian name' do
-      expect(subject.ru).to be_nil
-    end
-    it 'should not have a korean name' do
-      expect(subject.ko).to be_nil
-    end
-    it 'should not have a traditional chinese name' do
-      expect(subject.zh_TW).to be_nil
+    {
+      id:   [ :idCategory,   rand(99) ],
+      name: [ :categoryName, "Name #{ Time.now }" ]
+    }.
+    each do |attribute, key_value|
+      key, value = key_value
+
+      it "should return data['#{ key }'] as ##{ attribute }" do
+        allow(data).to receive(:[]).
+          with(key.to_s).
+          and_return value
+
+        expect(subject.send attribute).to be value
+      end
     end
 
   end
 
-  context described_class.const_get :Prices do
+  it 'should return data["priceGuide"] as Prices on #prices' do
+    prices = double :prices
 
-    let(:data) { sample('product').first['priceGuide'] }
+    allow(data).to receive(:[]).
+      with('priceGuide').
+      and_return prices
+
+    expect(subject.prices).to eq described_class::Prices.
+      new prices
+  end
+
+  context described_class::Prices do
+
     subject { described_class.new data }
 
-    it 'should have an average price of 31.8' do
-      expect(subject.average).to be 31.8
+    {
+      average: [ :SELL,    (rand * 500).round(2) ],
+      max:     [ :AVG,     (rand * 500).round(2) ],
+      min:     [ :LOWEX,   (rand * 500).round(2) ],
+      low:     [ :LOW,     (rand * 500).round(2) ],
+      foil:    [ :LOWFOIL, (rand * 500).round(2) ],
+      trend:   [ :TREND,   (rand * 500).round(2) ]
+    }.
+    each do |attribute, key_value|
+      key, value = key_value
+
+      it "should return data['#{ key }'] as ##{ attribute }" do
+        allow(data).to receive(:[]).
+          with(key.to_s).
+          and_return value
+
+        expect(subject.send attribute).to be value
+      end
     end
-    it 'should have a max price of 38.85' do
-      expect(subject.max).to be 38.85
+
+  end
+
+  context described_class::Names do
+
+    let(:language)     { language = Mkm::LANGUAGES.compact.sample }
+    let(:translation)  { double :translation }
+    let(:translations) { double :translations }
+    subject do
+      allow(data).to receive(:values).and_return(translations)
+      described_class.new data
     end
-    it 'should have a min price of 24.49' do
-      expect(subject.min).to be 24.49
+
+    it 'should return product name for translation if found' do
+      name = double :name
+
+      allow(translation).to receive(:[]).with('productName').and_return name
+      allow(translations).to receive(:find).and_return translation
+
+      expect(subject.send language).to be name
     end
-    it 'should have a low price of 24.49' do
-      expect(subject.low).to be 24.49
+
+    it 'should return nil if no translation can be found' do
+      allow(translations).to receive(:find)
+      expect(subject.send language).to be_nil
     end
-    it 'should have a foil price of 89.9' do
-      expect(subject.foil).to be 89.9
-    end
-    it 'should not have a trend' do
-      expect(subject.trend).to be_nil
+
+    it 'should search for idLanguage in translations' do
+      id = double :id
+
+      allow(translations).to receive(:find).
+        and_yield translation
+      allow(translation).to receive(:[]).
+        with('idLanguage').
+        and_return id
+      expect(id).to receive(:eql?).
+        with Mkm::LANGUAGES.index(language)
+
+      subject.send language
     end
 
   end
