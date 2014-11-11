@@ -30,7 +30,7 @@ describe Mkm::Entity::Article do
     end
   end
 
-  it 'should be in excellent condition' do
+  it "should return data['condition'] as Condition on #condition" do
     condition = %w[ M NM EX GD LP PL P ].sample
 
     allow(data).to receive(:[]).
