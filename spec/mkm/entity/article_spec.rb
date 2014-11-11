@@ -2,66 +2,42 @@ require 'spec_helper'
 
 describe Mkm::Entity::Article do
 
-  context 'example' do
+  let(:data) { double :data }
+  subject { described_class.new data }
 
-    subject { described_class.new sample('article').first }
+  {
+    id:             [ :idArticle,      rand(999_999_999) ],
+    product_id:     [ :idProduct,      rand(999_999) ],
+    comment:        [ :comments,       "Comment #{ Time.now }" ],
+    price:          [ :price,          rand ],
+    count:          [ :count,          rand(10) ],
+    reserved?:      [ :inShoppingCart, rand > 0.5 ],
+    foil?:          [ :isFoil,         rand > 0.5 ],
+    signed?:        [ :isSigned,       rand > 0.5 ],
+    playset?:       [ :isPlayset,      rand > 0.5 ],
+    altered?:       [ :isAltered,      rand > 0.5 ],
+    first_edition?: [ :isFirstEd,      rand > 0.5 ]
+  }.
+  each do |attribute, key_value|
+    key, value = key_value
 
-    it 'should have the id 142158699' do
-      expect(subject.id).to be 142_158_699
-    end
-    it 'should have the product id 266361' do
-      expect(subject.product_id).to be 266_361
-    end
-    it 'should be uncommented' do
-      expect(subject.comment).to be_empty
-    end
-    it 'should cost 0.02' do
-      expect(subject.price).to be 0.02
-    end
-    it 'should be in excellent condition' do
-      expect(subject.condition).to be Mkm::Condition::EXCELLENT
-    end
-    it 'should be available 3 times' do
-      expect(subject.count).to be 3
-    end
-    it { is_expected.not_to be_reserved }
-    it { is_expected.not_to be_foil }
-    it { is_expected.not_to be_signed }
-    it { is_expected.not_to be_playset }
-    it { is_expected.not_to be_altered }
-    it { is_expected.not_to be_first_edition }
+    it "should return data['#{ key }'] as ##{ attribute }" do
+      allow(data).to receive(:[]).
+        with(key.to_s).
+        and_return value
 
+      expect(subject.send attribute).to be value
+    end
   end
 
-  context 'reserved example' do
+  it 'should be in excellent condition' do
+    condition = %w[ M NM EX GD LP PL P ].sample
 
-    subject { described_class.new sample('article').last }
+    allow(data).to receive(:[]).
+      with('condition').
+      and_return condition
 
-    it 'should have the id 139659146' do
-      expect(subject.id).to be 139_659_146
-    end
-    it 'should have the product id 266361' do
-      expect(subject.product_id).to be 266_361
-    end
-    it 'should commented with "Scan available"' do
-      expect(subject.comment).to be_eql 'Scan available'
-    end
-    it 'should cost 0.03' do
-      expect(subject.price).to be 0.03
-    end
-    it 'should be in near mint condition' do
-      expect(subject.condition).to be Mkm::Condition::NEAR_MINT
-    end
-    it 'should be reserved 1 time' do
-      expect(subject.count).to be 1
-    end
-    it { is_expected.to be_reserved }
-    it { is_expected.not_to be_foil }
-    it { is_expected.not_to be_signed }
-    it { is_expected.not_to be_playset }
-    it { is_expected.not_to be_altered }
-    it { is_expected.not_to be_first_edition }
-
+    expect(subject.condition).to be Mkm::Condition.fetch condition
   end
 
 end
