@@ -10,9 +10,9 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
-  s.authors = ["Roland Swingler", "Florian A\u{df}mann"]
-  s.date = "2014-10-14"
-  s.description = "Ruby interface for version 1.1 of the magiccardmarket.eu API."
+  s.authors = ["Florian A\u{df}mann", "Roland Swingler"]
+  s.date = "2014-11-11"
+  s.description = "Ruby interface to version 1.1 of the magiccardmarket.eu API."
   s.email = "florian.assmann@email.de"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -23,59 +23,111 @@ Gem::Specification.new do |s|
     ".rbenv-gemsets",
     ".rspec",
     "Gemfile",
+    "Guardfile",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
     "lib/mkm.rb",
-    "lib/mkm/client.rb",
+    "lib/mkm/agent.rb",
+    "lib/mkm/condition.rb",
+    "lib/mkm/entity.rb",
+    "lib/mkm/entity/article.rb",
+    "lib/mkm/entity/expansion.rb",
+    "lib/mkm/entity/game.rb",
+    "lib/mkm/entity/product.rb",
+    "lib/mkm/entity/product/category.rb",
+    "lib/mkm/entity/product/names.rb",
+    "lib/mkm/entity/product/prices.rb",
+    "lib/mkm/entity/product/rarity.rb",
+    "lib/mkm/entity/user.rb",
+    "lib/mkm/entity/user/address.rb",
+    "lib/mkm/entity/user/name.rb",
+    "lib/mkm/entity/user/reliability.rb",
+    "lib/mkm/entity/user/reputation.rb",
+    "lib/mkm/entity/user/shipping_speed.rb",
+    "lib/mkm/entity/user/type.rb",
+    "lib/mkm/service.rb",
+    "lib/mkm/service/account_management.rb",
+    "lib/mkm/service/market_place_information.rb",
+    "lib/mkm/service/order_management.rb",
+    "lib/mkm/service/shopping_cart_manipulation.rb",
+    "lib/mkm/service/stock_management.rb",
+    "lib/mkm/service/wants_list_management.rb",
     "lib/mkm/session.rb",
     "mkm.gemspec",
-    "spec/client_spec.rb",
-    "spec/oauth_header_spec.rb",
-    "spec/samples/games.json",
-    "spec/samples/products.json",
-    "spec/session_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/mkm/condition_spec.rb",
+    "spec/mkm/entity/article_spec.rb",
+    "spec/mkm/entity/expansion_spec.rb",
+    "spec/mkm/entity/game_spec.rb",
+    "spec/mkm/entity/product_spec.rb",
+    "spec/mkm/entity/user_spec.rb",
+    "spec/mkm/entity_spec.rb",
+    "spec/mkm/service/account_management_spec.rb",
+    "spec/mkm/service/market_place_information_spec.rb",
+    "spec/mkm/service/stock_management_spec.rb",
+    "spec/mkm/service_spec.rb",
+    "spec/mkm_spec.rb",
+    "spec/samples/account.json",
+    "spec/samples/article.json",
+    "spec/samples/expansion.json",
+    "spec/samples/game.json",
+    "spec/samples/product.json",
+    "spec/samples/seller.json",
+    "spec/spec_helper.rb",
+    "spec/support/samples.rb"
   ]
   s.homepage = "http://github.com/boof/mkm"
   s.licenses = ["MIT"]
   s.rubygems_version = "2.2.2"
-  s.summary = "Ruby interface to the magiccardmarket.eu API."
+  s.summary = "Ruby interface to version 1.1 of the magiccardmarket.eu API."
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<addressable>, ["~> 2.3.6"])
       s.add_runtime_dependency(%q<faraday>, ["~> 0.9.0"])
-      s.add_runtime_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+      s.add_runtime_dependency(%q<faraday_middleware>, ["~> 0.9.0"])
       s.add_runtime_dependency(%q<oj>, ["~> 2.10.3"])
+      s.add_runtime_dependency(%q<oj_mimic_json>, ["~> 1.0.1"])
+      s.add_runtime_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+      s.add_development_dependency(%q<pry>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<guard-rspec>, [">= 0"])
+      s.add_development_dependency(%q<guard-livereload>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 2"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
     else
-      s.add_dependency(%q<addressable>, ["~> 2.3.6"])
       s.add_dependency(%q<faraday>, ["~> 0.9.0"])
-      s.add_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+      s.add_dependency(%q<faraday_middleware>, ["~> 0.9.0"])
       s.add_dependency(%q<oj>, ["~> 2.10.3"])
+      s.add_dependency(%q<oj_mimic_json>, ["~> 1.0.1"])
+      s.add_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+      s.add_dependency(%q<pry>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<guard-rspec>, [">= 0"])
+      s.add_dependency(%q<guard-livereload>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 2"])
       s.add_dependency(%q<simplecov>, [">= 0"])
     end
   else
-    s.add_dependency(%q<addressable>, ["~> 2.3.6"])
     s.add_dependency(%q<faraday>, ["~> 0.9.0"])
-    s.add_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+    s.add_dependency(%q<faraday_middleware>, ["~> 0.9.0"])
     s.add_dependency(%q<oj>, ["~> 2.10.3"])
+    s.add_dependency(%q<oj_mimic_json>, ["~> 1.0.1"])
+    s.add_dependency(%q<simple_oauth>, ["~> 0.2.0"])
+    s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<guard-rspec>, [">= 0"])
+    s.add_dependency(%q<guard-livereload>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 2"])
     s.add_dependency(%q<simplecov>, [">= 0"])
   end
 end
+

@@ -17,10 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "mkm"
   gem.homepage = "http://github.com/boof/mkm"
   gem.license = "MIT"
-  gem.summary = "Ruby interface to the magiccardmarket.eu API."
-  gem.description = "Ruby interface to the magiccardmarket.eu API."
+  gem.summary = "Ruby interface to version 1.1 of the magiccardmarket.eu API."
+  gem.description = "Ruby interface to version 1.1 of the magiccardmarket.eu API."
   gem.email = "florian.assmann@email.de"
-  gem.authors = ["Roland Swingler", "Florian Aßmann"]
+  gem.authors = ["Florian Aßmann", "Roland Swingler"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
