@@ -13,6 +13,8 @@ end
 
 ENV["COVERAGE"] && SimpleCov.start do
   add_filter "/.rvm/"
+  add_filter "/.rbenv/"
+  add_filter "/.gems/"
 end
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
