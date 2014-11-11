@@ -9,16 +9,16 @@ end
 SimpleCov.configure do
   clean_filters
   load_profile 'test_frameworks'
-end
-SimpleCov.minimum_coverage 97
 
-ENV["COVERAGE"] && SimpleCov.start do
   add_group "Entities", "lib/mkm/entity"
   add_group "Services", "lib/mkm/service"
   add_filter "/.rvm/"
   add_filter "/.rbenv/"
   add_filter "/.gems/"
 end
+SimpleCov.minimum_coverage 97
+SimpleCov.start if ENV["COVERAGE"] and ARGV.last == 'spec'
+
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
