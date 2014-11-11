@@ -6,13 +6,16 @@ module Mkm
     def self.register(value)
       @instances[value] = new value
     end
+    def self.register_next
+      register @instances.count
+    end
     def self.fetch(value)
       @instances[value]
     end
 
-    NORMAL_SPEED = register 0
-    VERY_FAST    = register 1
-    FAST         = register 2
+    NORMAL    = register_next
+    VERY_FAST = register_next
+    FAST      = register_next
 
     def normal?
       self == NORMAL

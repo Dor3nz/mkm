@@ -6,13 +6,16 @@ module Mkm
     def self.register(value)
       @instances[value] = new value
     end
+    def self.register_next
+      register @instances.count
+    end
     def self.fetch(value)
       @instances[value]
     end
 
-    RELIABLE          = register 0
-    UNRELIABLE        = register 1
-    HIGHLY_UNRELIABLE = register 2
+    RELIABLE          = register_next
+    UNRELIABLE        = register_next
+    HIGHLY_UNRELIABLE = register_next
 
     def reliable?
       self == RELIABLE
