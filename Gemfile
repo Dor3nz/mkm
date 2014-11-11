@@ -12,6 +12,7 @@ group :development do
   gem "pry"
   gem "rspec"
   gem 'guard-rspec', require: false
+  gem 'guard-livereload', require: false
   gem "rdoc"
   gem "bundler"
   gem "jeweler", "~> 2"
