@@ -1,20 +1,20 @@
 module Mkm
-  class Condition < Struct.new(:value, :name, :abbr)
+  class Condition < Struct.new(:abbr, :value)
     include Comparable
 
     @instances = {}
 
-    def self.register(name: nil, abbr: nil)
-      @instances[abbr] = new @instances.count, name, abbr
+    def self.register(abbr)
+      @instances[abbr] = new abbr, @instances.count
     end
 
-    MINT         = register name: 'Mint', abbr: 'M'
-    NEAR_MINT    = register name: 'Near Mint', abbr: 'NM'
-    EXCELLENT    = register name: 'Excellent', abbr: 'EX'
-    GOOD         = register name: 'Good', abbr: 'GD'
-    LIGHT_PLAYED = register name: 'Light Played', abbr: 'LP'
-    PLAYED       = register name: 'Played', abbr: 'PL'
-    POOR         = register name: 'Poor', abbr: 'P'
+    MINT         = register 'M'
+    NEAR_MINT    = register 'NM'
+    EXCELLENT    = register 'EX'
+    GOOD         = register 'GD'
+    LIGHT_PLAYED = register 'LP'
+    PLAYED       = register 'PL'
+    POOR         = register 'P'
 
     def self.fetch(abbr)
       @instances.fetch abbr
@@ -23,6 +23,6 @@ module Mkm
     def <=>(other)
       value <=> other.value
     end
-    alias_method :to_s, :name
+    alias_method :to_s, :abbr
   end
 end
