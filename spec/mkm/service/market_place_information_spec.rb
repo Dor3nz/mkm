@@ -16,7 +16,7 @@ describe Mkm::Service::MarketPlaceInformation do
     expect(subject.find_user_by_id 9999).to eq Mkm::Entity::User.new response
   end
 
-  it 'should get games' do
+  it 'should return Game instances from response' do
     response = sample 'game'
     allow(agent).to receive(:get).
       with('games').
