@@ -8,7 +8,7 @@ module Mkm
     attr_reader :last
 
     def get(path)
-      process :get, path, {}
+      process :get, path, nil
     end
     def put(path, body = nil)
       process :put, path, body
