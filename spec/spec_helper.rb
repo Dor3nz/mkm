@@ -17,7 +17,7 @@ SimpleCov.configure do
   add_filter "/.gems/"
 end
 SimpleCov.minimum_coverage 97
-SimpleCov.start if ENV["COVERAGE"] and ARGV.last == 'spec'
+SimpleCov.start if ENV["COVERAGE"] or ARGV.last == 'spec'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
