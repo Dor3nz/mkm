@@ -51,8 +51,9 @@ module Mkm
     end
 
     def find_articles_by_product_id(id)
-      data = agent.get('articles/%i' % id)['article']
-      Entity::Article.new data
+      agent.get('articles/%i' % id)['article'].map do |data|
+        Entity::Article.new data
+      end
     end
 
     def find_articles_by_product(product)

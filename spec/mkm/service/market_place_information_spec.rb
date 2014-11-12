@@ -49,7 +49,7 @@ describe Mkm::Service::MarketPlaceInformation do
       with(game.id).
       and_return expansions
 
-    expect(subject.find_expansions_by_game game).to eq expansions
+    expect(subject.find_expansions_by_game game).to be expansions
   end
 
   it 'should find expansion by game id and name' do
@@ -74,7 +74,7 @@ describe Mkm::Service::MarketPlaceInformation do
       with(game.id, expansion.name).
       and_return expansion
 
-    expect(subject.send finder, game, expansion.name).to eq expansion
+    expect(subject.send finder, game, expansion.name).to be expansion
   end
 
   it 'should find products by game id and expansion name' do
@@ -101,7 +101,57 @@ describe Mkm::Service::MarketPlaceInformation do
       with(game.id, expansion.name).
       and_return products
 
-    expect(subject.send finder, game, expansion).to eq products
+    expect(subject.send finder, game, expansion).to be products
+  end
+
+  it 'should find product by id' do
+    finder   = :find_product_by_id
+    id       = rand 999_999
+    response = sample 'product'
+    product  = Mkm::Entity::Product.new response
+
+    allow(agent).to receive(:get).
+      with("product/#{ id }").
+      and_return 'product' => response
+
+    expect(subject.send finder, id).to eq product
+  end
+
+  it 'should find product by article' do
+    finder   = :find_product_by_article
+    article  = double :article, product_id: rand(999_999)
+    product  = Mkm::Entity::Product.new sample 'product'
+
+    allow(subject).to receive(:find_product_by_id).
+      with(article.product_id).
+      and_return product
+
+    expect(subject.send finder, article).to be product
+  end
+
+  it 'should find articles by product_id' do
+    finder     = :find_articles_by_product_id
+    product_id = rand 999_999
+    response   = sample 'article'
+    articles   = response.map { |data| Mkm::Entity::Article.new data }
+
+    allow(agent).to receive(:get).
+      with("articles/#{ product_id }").
+      and_return 'article' => response
+
+    expect(subject.send finder, product_id).to eq articles
+  end
+
+  it 'should find articles by product' do
+    finder   = :find_articles_by_product
+    product  = double :product, id: rand(999_999)
+    articles = sample('article').map { |data| Mkm::Entity::Article.new data }
+
+    allow(subject).to receive(:find_articles_by_product_id).
+      with(product.id).
+      and_return articles
+
+    expect(subject.send finder, product).to be articles
   end
 
 end
