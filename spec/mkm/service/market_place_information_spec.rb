@@ -31,7 +31,7 @@ describe Mkm::Service::MarketPlaceInformation do
 
   it 'should find expansions by game id' do
     game_id    = rand 10
-    response   = Array(sample 'expansion')
+    response   = Array sample 'expansion'
     expansions = response.map { |data| Mkm::Entity::Expansion.new data }
 
     allow(agent).to receive(:get).
@@ -40,10 +40,10 @@ describe Mkm::Service::MarketPlaceInformation do
 
     expect(subject.find_expansions_by_game_id game_id).to eq expansions
   end
+
   it 'should find expansions by game' do
     game       = double :game, id: rand(10)
-    response   = Array(sample 'expansion')
-    expansions = response.map { |data| Mkm::Entity::Expansion.new data }
+    expansions = Array Mkm::Entity::Expansion.new sample 'expansion'
 
     allow(subject).to receive(:find_expansions_by_game_id).
       with(game.id).
@@ -51,7 +51,9 @@ describe Mkm::Service::MarketPlaceInformation do
 
     expect(subject.find_expansions_by_game game).to eq expansions
   end
+
   it 'should find expansion by game id and name' do
+    finder    = :find_expansion_by_game_id_and_name
     game_id   = rand 10
     response  = sample 'expansion'
     expansion = Mkm::Entity::Expansion.new response
@@ -60,20 +62,46 @@ describe Mkm::Service::MarketPlaceInformation do
       with("expansion/#{ game_id }/#{ subject.e expansion.name }").
       and_return 'expansion' => response
 
-    result = subject.find_expansion_by_game_id_and_name game_id, expansion.name
-    expect(result).to eq expansion
+    expect(subject.send finder, game_id, expansion.name).to eq expansion
   end
+
   it 'should find expansion by game and name' do
+    finder    = :find_expansion_by_game_and_name
     game      = double :game, id: rand(10)
-    response  = sample 'expansion'
-    expansion = Mkm::Entity::Expansion.new response
+    expansion = Mkm::Entity::Expansion.new sample 'expansion'
 
     allow(subject).to receive(:find_expansion_by_game_id_and_name).
       with(game.id, expansion.name).
       and_return expansion
 
-    result = subject.find_expansion_by_game_and_name game, expansion.name
-    expect(result).to eq expansion
+    expect(subject.send finder, game, expansion.name).to eq expansion
+  end
+
+  it 'should find products by game id and expansion name' do
+    finder         = :find_products_by_game_id_and_expansion_name
+    game_id        = rand 10
+    expansion_name = "Expansion #{ Time.now }"
+    response       = Array sample 'product'
+    products       = response.map { |data| Mkm::Entity::Product.new data }
+
+    allow(agent).to receive(:get).
+      with("expansion/#{ game_id }/#{ subject.e expansion_name }").
+      and_return 'card' => response
+
+    expect(subject.send finder, game_id, expansion_name).to eq products
+  end
+
+  it 'should find products by game and expansion' do
+    finder    = :find_products_by_game_and_expansion
+    game      = double :game, id: rand(10)
+    expansion = double :expansion, name: "Expansion #{ Time.now }"
+    products  = Array Mkm::Entity::Product.new sample 'product'
+
+    allow(subject).to receive(:find_products_by_game_id_and_expansion_name).
+      with(game.id, expansion.name).
+      and_return products
+
+    expect(subject.send finder, game, expansion).to eq products
   end
 
 end
