@@ -7,7 +7,7 @@ module Mkm
     end
 
     def get_games
-      @games ||= agent.get('games')['game'].map do |data|
+      agent.get('games')['game'].map do |data|
         Entity::Game.new data
       end
     end
