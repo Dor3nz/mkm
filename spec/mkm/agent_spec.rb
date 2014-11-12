@@ -5,7 +5,7 @@ describe Mkm::Agent do
   let(:connection) { double :connection }
   let(:auth) { double :auth }
 
-  subject { described_class.new connection, auth}
+  subject { described_class.new connection, auth }
 
   it 'should request JSON output' do
     allow(subject).to receive(:oauth)
